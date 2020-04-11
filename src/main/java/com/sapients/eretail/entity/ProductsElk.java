@@ -1,32 +1,21 @@
 package com.sapients.eretail.entity;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+@Data
 @Entity
 @Table(name = "products")
-@Getter
-@Setter
-@RequiredArgsConstructor
 
-public class Products {
-    public Products(String productName, String brand, Double price, String color, String seller, String sku,int quantity, String size){
-        this.productName = productName;
-        this.brand = brand;
-        this.price = price;
-        this.color = color;
-        this.seller = seller;
-        this.sku = sku;
-        this.quantity = quantity;
-        this.size = size;
-    }
+@Document(indexName = "eretail_products_index", type = "products", shards = 1, replicas = 0,
+        refreshInterval = "-1")
+public class ProductsElk {
     @Id
     @GeneratedValue
     private Long id;
